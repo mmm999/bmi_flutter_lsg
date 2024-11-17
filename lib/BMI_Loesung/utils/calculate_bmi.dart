@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bmi/screens/calculator_screen.dart';
+import 'package:bmi/BMI_Loesung/screens/calculator_screen.dart';
 
 class BmiLogic {
   //BmiLogic({required this.height, required this.weight});

@@ -1,12 +1,12 @@
 import 'result_screen.dart';
-import 'package:bmi/constants.dart';
+import 'package:bmi/BMI_Loesung/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:bmi/components/bottom_button.dart';
-import 'package:bmi/components/icon_content.dart';
-import 'package:bmi/components/reusable_card.dart';
-import 'package:bmi/components/round_icon_button.dart';
+import 'package:bmi/BMI_Loesung/components/bottom_button.dart';
+import 'package:bmi/BMI_Loesung/components/icon_content.dart';
+import 'package:bmi/BMI_Loesung/components/reusable_card.dart';
+import 'package:bmi/BMI_Loesung/components/round_icon_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:bmi/utils/calculate_bmi.dart';
+import 'package:bmi/BMI_Loesung/utils/calculate_bmi.dart';
 
 import 'package:fluttertoast/fluttertoast.dart'; //-------------------------------
 
@@ -237,7 +237,8 @@ class CalculatorScreenState extends State<CalculatorScreen> {
           BottomButton(
             buttonTitle: 'CALCULATE',
             onTap: () {
-              BmiLogic calc = BmiLogic(height: height, weight: weight);
+              BmiLogic calc = BmiLogic(
+                  height: height, weight: weight, gender: selectedGender);
 
               Navigator.push(
                 context,
