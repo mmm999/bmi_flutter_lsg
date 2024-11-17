@@ -8,8 +8,7 @@ import 'package:bmi/components/round_icon_button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bmi/utils/calculate_bmi.dart';
 
-// Das importieren, um Toast-Meldungen zu generieren
-// import 'package:fluttertoast/fluttertoast.dart';
+import 'package:fluttertoast/fluttertoast.dart'; //-------------------------------
 
 enum Gender {
   male,
@@ -24,25 +23,24 @@ class CalculatorScreen extends StatefulWidget {
 }
 
 class CalculatorScreenState extends State<CalculatorScreen> {
-  // ------------------------------------------------------------------
-  // hier mit einem Standardwert versehen und none-null-able machen
-  Gender? selectedGender;
-
+  //Gender? selectedGender; //= Gender.male; -------------------------
+  Gender selectedGender = Gender.male;
   int height = 180;
   int weight = 80;
   int age = 50;
 
-  // -------------------------------
-  // ein boolean-Wert um zu checken ob age akiv auf false setzen
+  // von mir
+  bool isAgeActivated = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('BMI CALCULATOR'),
-        // Titel zentrieren
+        //centerTitle: true, ------------------------------------------
       ),
       body: Column(
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
@@ -60,8 +58,8 @@ class CalculatorScreenState extends State<CalculatorScreen> {
                           ? kActiveCardColour
                           : kInactiveCardColour,
                       cardChild: const IconContent(
-                          // person icon nutzen, Bibliothekl ----------------
-                          icon: FontAwesomeIcons.mars,
+                          //icon: FontAwesomeIcons.mars, // ext. Bibliothekl ----------------
+                          icon: FontAwesomeIcons.person, // ext. Bibliothekl
                           label: 'MALE')),
                 ),
                 // Weiblich
@@ -77,8 +75,8 @@ class CalculatorScreenState extends State<CalculatorScreen> {
                         : kInactiveCardColour,
                     cardChild: const IconContent(
                       icon:
-                          // personDress icon nutzen, Bibliothekl ----------------
-                          FontAwesomeIcons.venus,
+                          FontAwesomeIcons.personDress, // person, ------------
+                      //icon: FontAwesomeIcons.venus, // ext. Bibliothekl
                       label: 'FEMALE',
                     ),
                   ),
@@ -108,16 +106,18 @@ class CalculatorScreenState extends State<CalculatorScreen> {
                       activeTrackColor: Colors.white,
                       thumbColor: const Color(0xFFEB1555),
                       overlayColor: const Color(0x29EB1555),
+
                       thumbShape:
                           const RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                      //overlayShape:
+                      //  const RoundSliderOverlayShape(overlayRadius: 30.0),
                     ),
                     child: Slider(
                       value: height.toDouble(),
                       min: 120.0,
                       max: 200.0,
                       // --------------------------------------------
-                      // akive Farbe wählen mit z.B. 0xFFEB1555
-
+                      activeColor: const Color(0xFFEB1555),
                       onChanged: (double newValue) {
                         setState(() {
                           height = newValue.round();
@@ -172,9 +172,10 @@ class CalculatorScreenState extends State<CalculatorScreen> {
                 Expanded(
                   child: ReusableCard(
                     //----------------------------------------------
-                    colour: kActiveCardColour, // dieser muss geändert werden
-                    // entweder kActiveCardColour oder kInactiveCardColour setzen
-                    // in Abhängigkeit von dem boolean, der oben definiert wurde
+                    //colour: kActiveCardColour,
+                    colour: isAgeActivated
+                        ? kActiveCardColour
+                        : kInactiveCardColour,
 
                     cardChild: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -190,8 +191,7 @@ class CalculatorScreenState extends State<CalculatorScreen> {
                                 setState(
                                   () {
                                     // ----------------------------
-                                    // nur wenn age aktiv gesetzt ist
-                                    age--;
+                                    if (isAgeActivated) age--;
                                   },
                                 );
                               },
@@ -203,9 +203,8 @@ class CalculatorScreenState extends State<CalculatorScreen> {
                                 icon: FontAwesomeIcons.plus,
                                 onPressed: () {
                                   setState(() {
-                                    // ----------------------------
-                                    // nur wenn age aktiv gesetzt ist
-                                    age++;
+                                    // -------------------------
+                                    if (isAgeActivated) age++;
                                   });
                                 })
                           ],
@@ -216,22 +215,18 @@ class CalculatorScreenState extends State<CalculatorScreen> {
                     // von mir erweitert den Inhalt
                     onPress: () {
                       // ----------------------------------------------------
-                      // den boolean-Wert bzgl. age aktivität umpolen
-                      // also a = !a;
-                      // damit es be jedem Drücken zwischen aktiv und inaktiv switcht
-
-                      //--------------------------------------------
-                      // wenn age aktiv ist
-                      // dann das einfügen
-                      /*Fluttertoast.showToast(
-                        msg: 'Wert wird nicht mit einberechnet!',
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.CENTER,
-                        fontSize: 20,
-                        textColor: Colors.// Farbe wählen,
-                        backgroundColor: Colors.// Farbe wählen,
-                      );*/
-
+                      isAgeActivated = !isAgeActivated;
+//--------------------------------------------
+                      if (isAgeActivated) {
+                        Fluttertoast.showToast(
+                          msg: 'Wert wird nicht mit einberechnet!',
+                          toastLength: Toast.LENGTH_LONG,
+                          gravity: ToastGravity.CENTER,
+                          fontSize: 20,
+                          textColor: Colors.white,
+                          backgroundColor: Colors.red,
+                        );
+                      }
                       setState(() {});
                     },
                   ),
@@ -242,8 +237,6 @@ class CalculatorScreenState extends State<CalculatorScreen> {
           BottomButton(
             buttonTitle: 'CALCULATE',
             onTap: () {
-              // hier den Konstruktor um ein Parameter gender erweitern
-              // wichtig, da der Wert zur Berechnung hinzugefügt wird
               BmiLogic calc = BmiLogic(height: height, weight: weight);
 
               Navigator.push(

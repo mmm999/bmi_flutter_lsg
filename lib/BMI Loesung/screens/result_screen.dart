@@ -21,10 +21,12 @@ class ResultsPage extends StatelessWidget {
         title: const Text('BMI CALCULATOR'),
       ),
       body: Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Container(
+              //padding: const EdgeInsets.all(15.0),
               alignment: Alignment.center,
               child: const Text('Your Result', style: kTitleTextStyle),
             ),
@@ -36,6 +38,7 @@ class ResultsPage extends StatelessWidget {
               colour: kActiveCardColour,
               cardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(resultText.toUpperCase(), style: kResultTextStyle),
                   // BMI Wert
