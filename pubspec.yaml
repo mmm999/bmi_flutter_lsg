@@ -31,6 +31,8 @@ dependencies:
   fluttertoast: ^8.2.5  #---------------------
   flutter:
     sdk: flutter
+  get: ^4.6.6  
+  flutter_randomcolor: ^1.0.16
     
 
 
