@@ -16,7 +16,7 @@ class PositionedTilesState extends State<PositionedTiles> {
   @override
   void initState() {
     super.initState();
-    print("------------- init ------------------");
+
     tiles = [
       StatefulColorfulTile(key: UniqueKey()),
       StatefulColorfulTile(key: UniqueKey()),
@@ -29,7 +29,7 @@ class PositionedTilesState extends State<PositionedTiles> {
 
   @override
   Widget build(BuildContext context) {
-    print("position tiled state");
+    //print("position tiled state");
     return Scaffold(
       body: Row(children: tiles),
       floatingActionButton: FloatingActionButton(
@@ -41,11 +41,9 @@ class PositionedTilesState extends State<PositionedTiles> {
 
   swapTiles() {
     setState(() {
-      print(tiles);
       tiles.insert(0, tiles.removeAt(1));
       tiles.insert(2, tiles.removeAt(3));
       print("swap");
-      print(tiles);
     });
   }
 }

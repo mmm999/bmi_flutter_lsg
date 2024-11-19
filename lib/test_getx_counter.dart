@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class CounterPage extends StatelessWidget {
-  final CounterController countControl = Get.put(CounterController());
+  final CounterController cc = Get.put(CounterController());
 
   CounterPage({super.key});
 
@@ -30,11 +30,11 @@ class CounterPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Obx(() => Text(
-              '${countControl.count}',
+              '${cc.count}',
             )),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: countControl.increment,
+        onPressed: cc.increment,
         child: const Icon(Icons.add),
       ),
     );
